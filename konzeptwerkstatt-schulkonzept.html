@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konzeptwerkstatt – Unser traumasensibles Schulkonzept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+:root{
+  --petrol:#35616C; --petrol-d:#24434B; --salbei:#7EAFB2; --creme:#FCF6E8;
+  --soft:#E6F0F0; --line:#D6E5E6; --line2:#C9DCDD; --ink:#263236; --muted:#4F6266;
+  --warn:#B5651D; --warn-bg:#FBEBDD;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:'Source Sans 3',system-ui,sans-serif;color:var(--ink);background:var(--creme);font-size:15px;line-height:1.5}
+button,input,textarea,select{font:inherit;color:inherit}
+.serif{font-family:Lora,Georgia,serif}
+
+/* ---------- App-Rahmen ---------- */
+.app{display:grid;grid-template-rows:auto 1fr;height:100vh}
+.top{display:flex;align-items:center;gap:16px;padding:12px 20px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;line-height:1.2;margin-right:auto}
+.brand b{font-family:Lora,Georgia,serif;font-size:18px;color:var(--petrol);font-weight:600}
+.brand span{font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.tbtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;font-weight:600;font-size:14px;color:var(--petrol);display:inline-flex;align-items:center;gap:6px}
+.tbtn:hover{background:var(--soft)}
+.tbtn.primary{background:var(--petrol);border-color:var(--petrol);color:var(--creme)}
+.tbtn.primary:hover{background:var(--petrol-d)}
+.tbtn.ghost{border-color:transparent}
+.main{display:grid;grid-template-columns:250px minmax(380px,1fr) minmax(360px,1.05fr);min-height:0}
+.nav{border-right:1px solid var(--line);overflow:auto;padding:16px 12px;background:#fff}
+.nav h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 8px 8px}
+.step-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:none;padding:9px 10px;border-radius:12px;cursor:pointer;font-size:14px;line-height:1.25}
+.step-btn:hover{background:var(--soft)}
+.step-btn.active{background:var(--petrol);color:var(--creme)}
+.step-btn .nr{font-family:Lora,Georgia,serif;font-size:15px;width:26px;flex:none;color:var(--salbei);font-weight:600}
+.step-btn.active .nr{color:var(--creme)}
+.step-btn .ring{margin-left:auto;flex:none}
+.step-btn .warn{color:var(--warn);font-weight:700;margin-left:4px}
+.step-btn.active .warn{color:#FFD7B0}
+.progress{margin:18px 8px 4px;font-size:13px;color:var(--muted)}
+.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--salbei);border-radius:99px;transition:width .3s}
+
+.form{overflow:auto;padding:28px 32px 80px}
+.form .kick{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--petrol)}
+.form h1{font-family:Lora,Georgia,serif;font-weight:600;font-size:30px;line-height:1.15;color:var(--petrol);margin:4px 0 6px}
+.form .lead{font-family:Lora,Georgia,serif;font-style:italic;font-size:17px;color:var(--petrol);margin:0 0 16px}
+.impulse{background:var(--soft);border-radius:16px;padding:16px 20px;margin-bottom:22px}
+.impulse b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--petrol);margin-bottom:6px}
+.impulse ul{margin:0;padding-left:18px}
+.impulse li{margin:3px 0}
+.field{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+.field>label{display:block;font-weight:700;color:var(--petrol);margin-bottom:2px}
+.field .hint{font-size:13.5px;color:var(--muted);margin-bottom:8px}
+.field input[type=text],.field textarea{width:100%;border:1px solid var(--line2);border-radius:10px;padding:9px 11px;background:#FFFEFB;outline:none;resize:vertical}
+.field input[type=text]:focus,.field textarea:focus{border-color:var(--salbei);box-shadow:0 0 0 3px rgba(126,175,178,.25)}
+.field textarea{min-height:92px;line-height:1.45}
+.row{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+.row .cols{display:grid;gap:6px;flex:1}
+.row .num{width:24px;height:24px;flex:none;border-radius:50%;background:var(--salbei);color:#1E3A41;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:8px}
+.icon-btn{border:0;background:none;cursor:pointer;color:var(--muted);padding:6px;border-radius:8px;line-height:0;margin-top:3px}
+.icon-btn:hover{background:var(--soft);color:var(--petrol)}
+.add{border:1px dashed var(--line2);background:none;border-radius:10px;padding:7px 12px;cursor:pointer;color:var(--petrol);font-weight:600;font-size:14px}
+.add:hover{background:var(--soft)}
+.ex-bar{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.chipbtn{border:0;background:var(--soft);color:var(--petrol);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.chipbtn:hover{background:#D3E5E6}
+.example{display:none;margin-top:10px;border-left:3px solid var(--salbei);background:#F6FAFA;border-radius:0 10px 10px 0;padding:10px 14px;font-size:14px;color:#33464A}
+.example.open{display:block}
+.example .t{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.example ul{margin:0;padding-left:18px}
+.stepnav{display:flex;justify-content:space-between;margin-top:26px;gap:10px}
+.fixnote{font-size:13.5px;color:var(--muted);background:#fff;border:1px dashed var(--line2);border-radius:14px;padding:12px 16px;margin-bottom:14px}
+
+.preview{background:#EDE8DA;overflow:auto;padding:20px;border-left:1px solid var(--line)}
+.pv-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.pv-head b{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:none;border-radius:999px;padding:4px 12px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--petrol);color:var(--creme)}
+.pwrap{margin:0 auto 22px;position:relative}
+.pwrap .pinner{transform-origin:top left;box-shadow:0 2px 10px rgba(38,50,54,.15)}
+.pwrap .plabel{font-size:12px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
+.pwrap .plabel .over{color:var(--warn);font-weight:700}
+.mobile-tabs{display:none}
+
+/* ---------- Seiten (A4, wie Vorlage) ---------- */
+.page{width:794px;min-height:1123px;box-sizing:border-box;padding:48px 64px 40px;display:flex;flex-direction:column;background:#FCF6E8;position:relative;overflow:hidden;font-family:'Source Sans 3',system-ui,sans-serif;color:#263236;font-size:15px;line-height:1.55}
+.page.over{outline:3px solid var(--warn);outline-offset:-3px}
+.page p{margin:0;text-wrap:pretty}
+.page h1,.page h2,.page h3{margin:0}
+.page a{color:#35616C}
+.page .kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#35616C}
+.page .h2{font-family:Lora,Georgia,serif;font-weight:600;font-size:34px;line-height:1.15;color:#35616C;text-wrap:balance}
+.page .lead{font-family:Lora,Georgia,serif;font-style:italic;font-weight:500;font-size:18px;line-height:1.4;color:#35616C}
+.page .h3{font-size:17px;font-weight:700;color:#35616C;line-height:1.3;margin-bottom:6px}
+.page .card{background:#FFFFFF;border:1px solid #D6E5E6;border-radius:16px;padding:20px 24px}
+.page .soft{background:#E6F0F0;border-radius:16px;padding:20px 24px}
+.page .meta{font-size:12px;color:#4F6266}
+.page .big{font-family:Lora,Georgia,serif;font-size:96px;line-height:.78;font-weight:500;color:#7EAFB2}
+.page .li{display:flex;gap:12px}
+.page .dot{width:8px;height:8px;border-radius:50%;background:#7EAFB2;flex:none;margin-top:9px}
+.page .blob{position:absolute;border-radius:50%;pointer-events:none}
+.page .rel{position:relative}
+.page .hd{display:flex;justify-content:space-between;border-bottom:1px solid #C9DCDD;padding-bottom:10px}
+.page .ft{display:flex;justify-content:space-between;border-top:1px solid #C9DCDD;padding-top:10px;margin-top:16px}
+.page .body{flex:1;display:flex;flex-direction:column;gap:20px;margin-top:26px}
+.page .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.page .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.page .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.page .quote{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid #D6E5E6;border-left:4px solid #7EAFB2;border-radius:14px;padding:16px 20px}
+.page .quote p{font-family:Lora,Georgia,serif;font-style:italic;font-size:19px;line-height:1.4;color:#35616C}
+.page .icn{display:flex;gap:12px;align-items:flex-start}
+.page .icn svg{flex:none;margin-top:1px}
+.page .ph{color:#9AA8AA;font-style:italic;background:repeating-linear-gradient(90deg,transparent 0 4px,rgba(126,175,178,.12) 4px 8px);border-radius:4px;padding:0 3px}
+.page .step{background:#FFFFFF;border:1px solid #D6E5E6;border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.45}
+.page .sn{width:26px;height:26px;border-radius:50%;background:#35616C;color:#FCF6E8;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.page .opt{background:#FFFFFF;border:1px solid #D6E5E6;border-radius:14px;padding:14px 16px;text-align:center;font-weight:600;color:#35616C}
+.page .q{background:#FFFFFF;border:1px solid #D6E5E6;border-radius:14px;padding:14px 16px;font-family:Lora,Georgia,serif;font-style:italic;font-size:17px;line-height:1.35;color:#35616C}
+.page .node{background:#FFFFFF;border:1px solid #D6E5E6;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.4}
+.page .arrow{color:#35616C;font-weight:700;font-size:20px;display:flex;align-items:center;justify-content:center}
+.page .track{height:12px;border-radius:999px;background:#E6F0F0;overflow:hidden}
+.page .fill{height:12px;border-radius:999px;background:#35616C}
+.page .ch{display:flex;gap:14px;align-items:flex-start}
+.page .cn{width:28px;height:28px;border-radius:50%;background:#7EAFB2;color:#1E3A41;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex:none}
+.page .chip{border-radius:999px;padding:6px 16px;font-weight:700;font-size:14px;background:#E6F0F0;color:#35616C}
+.page .qchip{border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;background:#E6F0F0;color:#35616C}
+.page .tb{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45}
+.page .tb th{background:#35616C;color:#FCF6E8;text-align:left;font-weight:700;padding:10px 12px;font-size:13px;letter-spacing:.04em}
+.page .tb th:first-child{border-top-left-radius:12px}
+.page .tb th:last-child{border-top-right-radius:12px}
+.page .tb td{background:#FFFFFF;border-bottom:1px solid #D6E5E6;padding:12px;vertical-align:top}
+.page .tb td:first-child{font-weight:700;color:#35616C;white-space:nowrap}
+.page .cell{display:flex;flex-direction:column;gap:2px;font-size:14.5px;line-height:1.5;background:#fff;border:1px solid #D6E5E6;border-radius:16px;padding:18px 20px}
+.page .say{font-family:Lora,Georgia,serif;font-style:italic;color:#35616C}
+.page .alert{display:flex;gap:14px;align-items:flex-start;border:2px solid #35616C;border-radius:16px;padding:16px 20px;background:#fff}
+.page .alert p{font-weight:600}
+
+#print{display:none}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--petrol);color:var(--creme);padding:10px 18px;border-radius:999px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%)}
+dialog{border:0;border-radius:20px;padding:26px 28px;max-width:440px;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+dialog::backdrop{background:rgba(38,50,54,.35)}
+dialog h2{font-family:Lora,Georgia,serif;color:var(--petrol);margin:0 0 8px;font-size:22px}
+dialog .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+
+@media (max-width:1180px){
+  .main{grid-template-columns:220px 1fr}
+  .preview{display:none}
+  .main.show-pv .form{display:none}
+  .main.show-pv .preview{display:block}
+  .mobile-tabs{display:inline-flex}
+}
+@media (max-width:760px){
+  .main{grid-template-columns:1fr}
+  .nav{display:none}
+  .main.show-nav .nav{display:block}
+  .main.show-nav .form,.main.show-nav .preview{display:none}
+  .form{padding:20px 16px 60px}
+  .top{padding:10px 12px}
+  .tbtn .lbl{display:none}
+}
+
+@media print{
+  @page{size:A4;margin:0}
+  html,body{height:auto;background:#fff}
+  .app,.toast,dialog{display:none!important}
+  #print{display:block}
+  #print .page{break-after:page;page-break-after:always;outline:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #print .page:last-child{break-after:auto;page-break-after:auto}
+  #print .page .ph{background:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><b>Traumapädagogik Döhler</b><span>Konzeptwerkstatt · Arbeitsvorlage Schulkonzept</span></div>
+    <span class="seg mobile-tabs" id="mtabs">
+      <button data-v="nav" class="nav-only">Bausteine</button>
+      <button data-v="form" class="on">Bearbeiten</button>
+      <button data-v="pv">Vorschau</button>
+    </span>
+    <button class="tbtn ghost" id="bExample" title="Das vollständige Beispiel „Grundschule am Birkenweg“ laden"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg><span class="lbl">Beispiel laden</span></button>
+    <button class="tbtn" id="bSave" title="Arbeitsstand als Datei sichern"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg><span class="lbl">Stand sichern</span></button>
+    <button class="tbtn" id="bLoad" title="Gesicherten Arbeitsstand öffnen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 21V9m0 0-4 4m4-4 4 4M5 3h14"/></svg><span class="lbl">Stand öffnen</span></button>
+    <button class="tbtn primary" id="bPrint" title="Fertiges Konzept drucken oder als PDF speichern"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg><span class="lbl">Drucken / PDF</span></button>
+    <input type="file" id="fileIn" accept=".json,application/json" hidden>
+  </header>
+  <div class="main" id="main">
+    <nav class="nav" id="nav"></nav>
+    <section class="form" id="form"></section>
+    <section class="preview" id="preview"></section>
+  </div>
+</div>
+<div id="print"></div>
+<div class="toast" id="toast"></div>
+<dialog id="dlg"><h2 id="dlgT"></h2><p id="dlgB"></p><div class="acts"><button class="tbtn" value="no" id="dlgNo">Abbrechen</button><button class="tbtn primary" id="dlgYes">Ja</button></div></dialog>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   Inhalt: Bausteine, Felder, Leitfragen, Beispiel Birkenweg
+   ========================================================= */
+var SECTIONS = [
+ {id:"start", nr:"", nav:"Schule & Titelseite", kicker:"Start", title:"Ihre Schule und die Titelseite",
+  lead:"Wer sind wir – und was sollen Kinder sich bei uns verlassen können?",
+  impulse:["Für welche Bereiche soll das Konzept gelten (Unterricht, Pause, Ganztag)?","Welche vier Sätze würden Kinder aus Ihrer Schule unterschreiben, wenn das Konzept wirkt?","Formulieren Sie die Sätze aus Sicht eines Kindes, in Ich-Form und in einfacher Sprache."],
+  fields:[
+   {id:"schule",type:"line",label:"Name der Schule",ph:"z. B. Grundschule am Birkenweg",ex:"Grundschule am Birkenweg"},
+   {id:"zusatz",type:"line",label:"Zusatz für die Titelzeile",hint:"Schulform, Ganztag, Bundesland",ph:"z. B. offener Ganztag · Nordrhein-Westfalen",ex:"offener Ganztag · Nordrhein-Westfalen"},
+   {id:"titel",type:"line",label:"Titel des Konzepts",ph:"Unser traumasensibles Schulkonzept",ex:"Unser traumasensibles Schulkonzept"},
+   {id:"untertitel",type:"text",rows:2,label:"Untertitel",hint:"Ein Satz, der das Versprechen des Konzepts zusammenfasst.",ex:"Acht Bausteine für Halt, echte Wahlmöglichkeiten und verlässliche Wege – in Unterricht, Pause und Ganztag."},
+   {id:"versprechen",type:"list",max:5,label:"Worauf Kinder sich bei uns verlassen können",hint:"3–4 kurze Sätze aus Sicht eines Kindes.",ph:"Ich …",
+    ex:["Wenn mir nach der Pause alles zu viel ist, darf ich das sagen oder zeigen.","Eine erwachsene Person bleibt für mich erreichbar.","Ich weiß, wo ich kurz zur Ruhe kommen kann und wie ich wieder mitmache.","Das gilt auch, wenn meine Klassenleitung fehlt."]},
+   {id:"fassung",type:"line",label:"Fassung",ph:"z. B. 1.0",ex:"1.1"},
+   {id:"gueltig",type:"line",label:"Gültig ab",ph:"z. B. 1. Februar 2027",ex:"23. November 2026"},
+   {id:"eckdaten",type:"line",label:"Eckdaten der Schule",ph:"z. B. 240 Kinder · 10 Klassen · 130 im Ganztag",ex:"192 Kinder · 8 Klassen · 112 im Ganztag"},
+   {id:"hinweis",type:"line",label:"Status des Dokuments",hint:"Erscheint auf der Titelseite und in jeder Fußzeile.",ph:"z. B. Entwurf der Steuergruppe",ex:"Fiktives Beispiel"}
+  ]},
+ {id:"intro", nr:"", nav:"Über dieses Konzept", kicker:"Einführung", title:"Über dieses Konzept",
+  lead:"Wofür gilt das Konzept, wer trägt es, und wann wird es überprüft?",
+  impulse:["Wer verantwortet die Umsetzung am Vormittag, wer am Nachmittag?","Wer gehört zur Steuergruppe?","Welche Meilensteine sind geplant – von der Erprobung bis zur ersten Überprüfung?"],
+  fields:[
+   {id:"geltung",type:"text",label:"Geltungsbereich und Trägerschaft im Team",ex:"Unsere Schule begleitet 192 Kinder in acht Klassen. 112 Kinder besuchen den offenen Ganztag (OGS). Dieses Konzept gilt für Unterricht, Pausen und Ganztag am Standort. Die Schulleitung verantwortet die schulische Umsetzung. Die Ganztagsleitung stimmt die Abläufe für den Nachmittag mit dem OGS-Träger ab. Beide benennen Vertretungen und führen Änderungen zusammen."},
+   {id:"redaktion",type:"text",rows:2,label:"Redaktion / Steuergruppe",ex:"Redaktion: Steuergruppe aus Schulleitung, einer Lehrkraft, Schulsozialarbeit und Ganztagsleitung."},
+   {id:"meilensteine",type:"pairs",max:4,label:"Meilensteine",hint:"Bis zu vier Termine. Der letzte wird als nächste Überprüfung hervorgehoben.",cols:[{k:"d",ph:"Datum"},{k:"t",ph:"Was passiert?"}],
+    ex:[{d:"7.9.–2.10.2026",t:"Erste Erprobung"},{d:"6.10.2026",t:"Auswertung"},{d:"19.11.2026",t:"Beschluss der Schulkonferenz: Aufnahme ins Schulprogramm"},{d:"26.2.2027",t:"Nächste gemeinsame Überprüfung"}]},
+   {id:"verwendung",type:"text",rows:3,label:"Hinweisbox (optional)",hint:"z. B. für wen das Dokument gedacht ist. Bleibt das Feld leer, entfällt die Box.",ex:"Vollständig ausgefülltes Beispiel einer fiktiven Schule. Schulname, Größenangaben, Beschlüsse, Daten und Rückmeldungen sind erfunden. Die acht Bausteine lassen sich auf die eigene Einrichtung übertragen. Übernehmen Sie konkrete Aufsichtsregelungen, Kontaktwege und Zuständigkeiten erst nach Abgleich mit Ihrer Schule."}
+  ]},
+ {id:"b1", nr:"01", nav:"Ausgangslage und Ziele", kicker:"Baustein 01", title:"Ausgangslage und Ziele",
+  lead:"Was gelingt schon? Was soll sich für Kinder ändern?",
+  impulse:["Welche Übergänge im Schulalltag haben Sie beobachtet (Pause, Vertretung, Wechsel in den Ganztag)?","Was sagen die Kinder selbst, z. B. im Klassenrat oder Kinderparlament?","Formulieren Sie Ziele so, dass man ihre Erreichung beobachten kann."],
+  fields:[
+   {id:"b1_beob",type:"text",label:"Was wir beobachtet haben",ex:"Im August haben Lehrkräfte und Ganztagskräfte zwei Wochen lang typische Übergänge besprochen. In sechs der acht Klassen kannten die Kinder einen Ruheplatz. Bei Vertretung war die Absprache nur in zwei Klassen auffindbar. Beim Wechsel in die OGS wussten manche Kinder nicht, welche erwachsene Person sie ansprechen konnten. Aus dem Kinderparlament kam die Bitte, über eine Pause entscheiden zu können, ohne vor der Gruppe erklären zu müssen, warum."},
+   {id:"b1_zahlen",type:"pairs",max:2,label:"Zwei Kennzahlen (optional)",hint:"Eine Zahl und kurz, was sie bedeutet.",cols:[{k:"w",ph:"z. B. 6 von 8"},{k:"t",ph:"Bedeutung"}],
+    ex:[{w:"6 von 8",t:"Klassen kannten einen Ruheplatz"},{w:"2 von 8",t:"Klassen: Absprache bei Vertretung auffindbar"}]},
+   {id:"b1_ziele",type:"pairs",max:3,label:"Unsere Ziele",hint:"Bis zu drei Ziele, jeweils mit einem Stichwort.",cols:[{k:"k",ph:"Stichwort"},{k:"t",ph:"Ziel",area:true}],
+    ex:[{k:"Hilfeweg",t:"Jedes Kind soll in Unterricht und Ganztag mindestens einen Hilfeweg kennen und ohne öffentliche Erklärung nutzen können."},{k:"Vertretung",t:"Jede Vertretung soll die Absprache zum Rückzug innerhalb einer Minute finden."},{k:"Rückkehr",t:"Nach einer Unterbrechung soll das Kind wissen, wie und mit wem es wieder in die Gruppe zurückkehrt."}]},
+   {id:"b1_pruef",type:"text",label:"So überprüfen wir die Ziele",ex:"Die Klassenleitungen lassen sich die Hilfewege im Klassenrat an einer erfundenen Situation zeigen. Die OGS-Gruppenleitungen fragen dasselbe für den Nachmittag. Die Steuergruppe prüft alle acht Vertretungsmappen und bittet zwei Vertretungskräfte um einen Praxistest. Die Ergebnisse werden auf Schulebene zusammengefasst. Bei der Rückschau am 26. Februar prüft die Steuergruppe besonders die Gruppen, in denen der Hilfeweg noch unklar war."}
+  ]},
+ {id:"b2", nr:"02", nav:"Gemeinsame Haltung", kicker:"Baustein 02", title:"Gemeinsame Haltung",
+  lead:"Verstehen, nachfragen und Grenzen setzen",
+  impulse:["Wie reagieren wir, wenn ein Kind Abstand braucht – ohne Druck, eine Erklärung zu liefern?","Wie setzen wir Grenzen, wenn andere geschützt werden müssen?","Woran würde eine Beobachterin unsere Haltung im Alltag erkennen?"],
+  fields:[
+   {id:"b2_intro",type:"text",rows:3,label:"Einstieg: Was wir in einer typischen Situation tun",ex:"Wir beschreiben zuerst, was wir sehen. Sagt ein Kind „Lass mich“, nimmt die Lehrkraft Abstand und fragt:"},
+   {id:"b2_satz",type:"line",label:"Ein Beispielsatz, der echte Wahl lässt",ex:"Soll ich hier warten oder nach der ersten Aufgabe wiederkommen?"},
+   {id:"b2_weiter",type:"text",label:"Grenzen und Schutz anderer",ex:"Was das Kind belastet, darf offenbleiben. Wenn es ein anderes Kind schubst, unterbrechen wir die Handlung, kümmern uns um das betroffene Kind und bieten für die Klärung einen ruhigen Rahmen an."},
+   {id:"b2_merkmale",type:"list",max:5,label:"Woran unsere Haltung erkennbar wird",ex:["Ein Kind darf ein Gespräch verschieben und eine andere vertraute Person wählen.","Die Erwachsenen benennen Grenzen und nächste Schritte in kurzen Sätzen.","Im monatlichen Stufenteam bringt die Stufenleitung eine fiktive Szene ein. Zu zweit prüfen wir, ob unsere Formulierung eine echte Wahl lässt. Bei Abwesenheit moderiert die Parallelklassenleitung.","Die von Kindern bevorzugten Formulierungen gehen in die nächste Überarbeitung ein."]}
+  ]},
+ {id:"b3", nr:"03", nav:"Traumasensibler Schulalltag", kicker:"Baustein 03", title:"Traumasensibler Schulalltag",
+  lead:"Wie geben Abläufe Halt und lassen Wahlmöglichkeiten?",
+  impulse:["Wie erfahren Kinder morgens, was heute anders ist?","Wie läuft die Übergabe an den Ganztag – und was passiert, wenn jemand fehlt?","Wie beteiligen Sie Kinder an der Gestaltung der Abläufe?"],
+  fields:[
+   {id:"b3_ankommen",type:"text",label:"Ankommen und Veränderungen ankündigen",ex:"Die erste Lehrkraft des Tages stellt den Ablauf mündlich und am Tagesplan mit Symbolen vor. Ändert sich ein Raum oder eine Bezugsperson, benennt sie, was sich ändert, was gleich bleibt und wen das Kind am Ziel antrifft. Wer den Plan nicht sehen oder lesen kann, bekommt die Information direkt in der vereinbarten Kommunikationsform."},
+   {id:"b3_fragen",type:"list",max:3,label:"Drei Leitfragen für Veränderungen",ex:["Was ändert sich?","Was bleibt gleich?","Wen treffe ich am Ziel?"]},
+   {id:"b3_schritte",type:"list",max:3,numbered:true,label:"Übergang in den Ganztag – drei Schritte",ex:["Die abgebende Lehrkraft begleitet die Gruppe zum vereinbarten Treffpunkt.","Die eingeteilte OGS-Kraft begrüßt die Kinder und bestätigt die Übernahme.","Fehlt sie, bleibt die abgebende Person bei der Gruppe und erreicht die Ganztagsleitung über das Sekretariat. Die Ganztagsleitung organisiert die Vertretung."]},
+   {id:"b3_liste",type:"line",label:"Wo stehen die Zuständigkeiten?",ex:"Die Tagesliste im Teamraum benennt für jede Gruppe die beiden zuständigen Funktionen."},
+   {id:"b3_beteiligung",type:"text",rows:3,label:"Beteiligung und Prüfung",ex:"Die Kinder zeigen neuen Mitschülerinnen und Mitschülern den Treffpunkt. Zu jedem Halbjahresbeginn geht die Ganztagsleitung mit dem Kinderrat den Weg ab und nimmt Änderungsvorschläge auf."},
+   {id:"b3_pruef",type:"line",label:"Prüffrage",ex:"Kann ein Kind auch bei geänderter Raumbelegung sagen oder zeigen, wo es empfangen wird?"}
+  ]},
+ {id:"b4", nr:"04", nav:"Umgang mit Belastung", kicker:"Baustein 04", title:"Umgang mit Belastung",
+  lead:"Rückzug und Rückkehr – ohne öffentliche Erklärung",
+  impulse:["Wo können Kinder sich zurückziehen, ohne aus der Aufsicht zu fallen?","Wie kommt ein Kind wieder in die Gruppe zurück – und welche Wahl hat es dabei?","Was passiert, wenn ein Kind das Angebot ablehnt?"],
+  fields:[
+   {id:"b4_rueckzug",type:"text",label:"Rückzug und Rückkehr nach der Pause",ex:"Bleibt ein Kind an der Tür stehen, begrüßt es die unterrichtende Lehrkraft leise und bietet einen Sitzplatz am Rand oder den vereinbarten Ruheplatz im selben Raum an. Das Kind kann sprechen, zeigen oder ablehnen. Die Lehrkraft bleibt für Kind und Klasse zuständig. Ist der Platz besetzt, bietet sie den zweiten einsehbaren Platz an."},
+   {id:"b4_regel",type:"line",label:"Wichtige Regel zur Aufsicht",ex:"Ein Wechsel in einen anderen Raum erfolgt erst nach persönlicher Übernahme durch eine zuständige erwachsene Person."},
+   {id:"b4_satz",type:"line",label:"Satz, mit dem wir den Anschluss anbieten",ex:"Soll ich nach der ersten Aufgabe zu dir kommen, oder möchtest du mir vorher ein Zeichen geben?"},
+   {id:"b4_optionen",type:"list",max:3,label:"Beim nächsten Kontakt kann das Kind wählen …",ex:["zuhören","zu zweit beginnen","mit einer kleinen Aufgabe einsteigen"]},
+   {id:"b4_weiter",type:"text",rows:3,label:"Wenn das Angebot abgelehnt wird",ex:"Wird das Angebot abgelehnt, bleibt die Lehrkraft ansprechbar. Später fragt sie unter vier Augen, was beim nächsten Mal helfen würde. Die Stufenleitung prüft bei der Rückschau anonym, ob Kinder eine Wahl und einen verständlichen Rückweg erlebt haben."}
+  ]},
+ {id:"b5", nr:"05", nav:"Schutz und Krisenwege", kicker:"Baustein 05", title:"Schutz und Krisenwege",
+  lead:"Wann greift welches bestehende Verfahren?",
+  impulse:["Wo endet pädagogische Unterstützung, und wo beginnt das schulische Schutzverfahren?","Wer ist erste interne Anlaufstelle, und wer vertritt diese Person?","Wo findet auch eine Vertretungskraft die Wege innerhalb einer Minute?"],
+  fixnote:"Feste Inhalte: Die Grundsätze bei Hinweisen auf Gewalt und der Vorrang des Notfallplans sind vorbelegt, Sie können sie anpassen. Die Einordnung zum Schulgesetz NRW erscheint unverändert auf Seite 8.",
+  fields:[
+   {id:"b5_e1",type:"text",label:"Ebene 1 · Pädagogische Unterstützung im Alltag",ex:"Zieht sich ein Kind zurück, bleibt die unterrichtende oder betreuende Person zuständig. Sie bietet Unterstützung nach Baustein 4 an. Die Kinder dürfen eine andere vertraute Person ansprechen. Wiederholt sich eine Situation, vereinbart die Klassenleitung ein Gespräch mit Kind, Ganztag und bei Bedarf der Schulsozialarbeit über geeignete pädagogische Anpassungen."},
+   {id:"b5_e2",type:"list",max:5,label:"Ebene 2 · Hinweise auf Gewalt oder Gefährdung",hint:"Was gilt für die angesprochene Person?",def:true,ex:["Ruhig zuhören, die Worte des Kindes ernst nehmen und den nächsten Schritt altersgerecht erklären.","Keine Geheimhaltung versprechen und auf ein ausführliches Befragen verzichten.","Dem freigegebenen schulischen Schutzverfahren folgen.","Beobachtung und möglichst wörtliche Aussage getrennt im vorgesehenen geschützten System festhalten."]},
+   {id:"b5_sorge",type:"line",label:"Einbezug der Sorgeberechtigten",def:true,ex:"Ob, wann und durch wen Sorgeberechtigte einbezogen werden, wird im Schutzverfahren geklärt."},
+   {id:"b5_notfall",type:"text",rows:2,label:"Bei unmittelbarer Gefahr",def:true,ex:"Bei unmittelbarer Gefahr wird der Notfallplan sofort ausgelöst und erforderliche Hilfe gerufen. Eine interne Rücksprache darf dringende Hilfe nicht verzögern."},
+   {id:"b5_stelle1",type:"line",label:"Erste interne Anlaufstelle",hint:"Funktion, nicht Name.",ex:"Schulleitung"},
+   {id:"b5_stelle2",type:"line",label:"Bei Abwesenheit",ex:"Stellvertretende Schulleitung"},
+   {id:"b5_sonder",type:"text",rows:2,label:"Wenn die Anlaufstelle selbst betroffen ist",ex:"Betrifft der Hinweis die Schulleitung selbst, nutzen Mitarbeitende unmittelbar den im Schutzkonzept benannten externen Beschwerdeweg zur zuständigen Schulaufsicht."},
+   {id:"b5_fund",type:"text",rows:2,label:"Wo das Team die Wege findet",ex:"Schutzkonzept, Abschnitt „Mitteilung und Beschwerde“, und schulischer Notfallplan liegen im geschützten Bereich „Schulorganisation / Schutz und Krise“."},
+   {id:"b5_orte",type:"pairs",max:3,label:"Fundorte",cols:[{k:"k",ph:"z. B. Digital"},{k:"t",ph:"Wo genau?"}],
+    ex:[{k:"Digital",t:"Schulorganisation / Schutz und Krise"},{k:"Kontaktkarte",t:"im Sekretariat"},{k:"Kontaktkarte",t:"im verschlossenen OGS-Teamraum"}]},
+   {id:"b5_kontrolle",type:"text",rows:2,label:"Wer hält die Angaben aktuell?",ex:"Schulleitung und Stellvertretung kontrollieren die Erreichbarkeiten zu Halbjahresbeginn. Beim Vertretungsbriefing zeigt die diensthabende Koordination den Fundort."}
+  ]},
+ {id:"b6", nr:"06", nav:"Familien und Netzwerk", kicker:"Baustein 06", title:"Familien und Netzwerk",
+  lead:"Wen beziehen wir ein und wie erreichen wir Hilfe?",
+  impulse:["Wie erfahren Familien von den Vereinbarungen, auch ohne gute Deutschkenntnisse?","Wer vermittelt Beratung, und wer vertritt diese Person?","Wie gehen Sie mit personenbezogenen Informationen um?"],
+  fields:[
+   {id:"b6_info",type:"text",label:"Information und Mitsprache",ex:"Die Klassenleitung stellt die Vereinbarung zum Rückzug beim ersten Elternabend vor. Familien erhalten einen kurzen Brief mit Symbolen sowie dem Kontakt zur Schulsozialarbeit über das Schulbüro. Auf Wunsch erklärt eine vertraute Fachkraft die Vereinbarung persönlich. Das Kind kann zeigen, welches Signal zu ihm passt. Familien können in einem Einzelgespräch ergänzen, welche Ansprache sich bewährt hat."},
+   {id:"b6_stufen",type:"pairs",max:3,numbered:true,label:"Beratung vermitteln – drei Stufen",cols:[{k:"k",ph:"Stufe"},{k:"t",ph:"Wer?"}],
+    ex:[{k:"Gemeinsames Ziel",t:"Klassenleitung mit Familie und Kind"},{k:"Vermittlung",t:"Schulsozialarbeit, Vertretung: Beratungslehrkraft"},{k:"Fachstellen",t:"Schulpsychologie oder Erziehungsberatung"}]},
+   {id:"b6_beratung",type:"text",rows:3,label:"So läuft die Vermittlung",ex:"Bei schulischen Fragen vereinbart die Klassenleitung zunächst mit der Familie und dem Kind ein gemeinsames Ziel. Die Schulsozialarbeit vermittelt bei Bedarf Kontakt zur Schulpsychologie oder Erziehungsberatung. Ihre Vertretung übernimmt die Beratungslehrkraft."},
+   {id:"b6_daten",type:"text",rows:3,label:"Umgang mit Informationen",def:true,ex:"Vor einer personenbezogenen Weitergabe klärt die zuständige Person Zweck, Empfängerkreis und zulässige Grundlage. Für Schutzanliegen gilt Baustein 5. Fallnamen und persönliche Hintergründe erscheinen weder in der Vertretungsmappe noch in der allgemeinen Maßnahmenübersicht."},
+   {id:"b6_rueck",type:"text",rows:3,label:"Rückmeldung der Familien",ex:"Die Schulpflegschaft sammelt zum Halbjahresende Rückmeldungen zur Verständlichkeit des Elternbriefs. Die Schulsozialarbeit prüft die Zugänglichkeit mit zwei freiwilligen Familien und überarbeitet missverständliche Stellen."}
+  ]},
+ {id:"b7", nr:"07", nav:"Teamkultur und Entlastung", kicker:"Baustein 07", title:"Teamkultur und Entlastung",
+  lead:"Auch Erwachsene brauchen verlässliche Wege.",
+  impulse:["Wie holt sich eine Kollegin in einer belastenden Situation schnell Unterstützung?","Wer bleibt bei der Gruppe, bis die Übernahme bestätigt ist?","Wie wird nachbereitet – freiwillig und ohne Bewertung?"],
+  fields:[
+   {id:"b7_intro",type:"line",label:"Wie wird Unterstützung angefordert?",ex:"Wer in einer belastenden Situation Unterstützung braucht, meldet über das vereinbarte Diensttelefon:"},
+   {id:"b7_code",type:"line",label:"Vereinbarter Satz",ex:"Unterstützung in Raum …"},
+   {id:"b7_ablauf",type:"text",label:"Was dann passiert",ex:"Das Sekretariat erreicht die laut Tagesplan verfügbare Kraft, am Nachmittag die OGS-Koordination. Bis zur bestätigten Übernahme bleibt die bisher zuständige Person bei der Gruppe. Ist keine Ablösung verfügbar, organisiert die Leitung eine neue Aufgabenverteilung. Für unmittelbare Gefahren gilt der Notfallplan."},
+   {id:"b7_nach",type:"line",label:"Kollegial nachbereiten – wer bietet es an?",ex:"Die Stufen- oder Ganztagsleitung bietet am selben Tag ein kurzes Gespräch an:"},
+   {id:"b7_fragen",type:"list",max:3,label:"Drei Fragen für die Nachbereitung",ex:["Was hat geholfen?","Wo war der Ablauf unklar?","Was brauchen wir für den nächsten Dienst?"]},
+   {id:"b7_schluss",type:"text",rows:3,label:"Rahmen und Überprüfung",ex:"Persönliche Beiträge sind freiwillig. Im monatlichen Teamgespräch werden nur strukturelle Punkte festgehalten. Die Schulleitung prüft im Februar anhand zweier Vertretungsszenarien, ob Unterstützung auch bei knapper Besetzung erreichbar ist."}
+  ]},
+ {id:"b8", nr:"08", nav:"Umsetzung und Überprüfung", kicker:"Baustein 08", title:"Umsetzung und Überprüfung",
+  lead:"Wer erprobt was und wann schauen wir auf die Wirkung?",
+  impulse:["Welche Klassen oder Gruppen erproben die Vereinbarungen zuerst?","Wie fragen Sie Kinder freiwillig und anonym nach ihrer Erfahrung?","Welche Termine, Verantwortlichen und Erfolgskriterien gibt es?"],
+  fixnote:"Fester Hinweis auf Seite 11: Rückmeldungen erlauben keine Aussage über die psychische Gesundheit einzelner Kinder.",
+  fields:[
+   {id:"b8_erprob",type:"text",rows:3,label:"Erprobung",ex:"Vom 7. September bis 2. Oktober erprobten die Klassen 2a und 3b mit ihren OGS-Gruppen die Absprachen. Bei der freiwilligen anonymen Rückmeldung antworteten 38 Kinder."},
+   {id:"b8_befunde",type:"pairs",max:3,label:"Befunde (optional)",hint:"Die Balken werden aus Anzahl und Gesamtzahl berechnet.",cols:[{k:"t",ph:"Aussage"},{k:"a",ph:"Anzahl",small:true},{k:"g",ph:"von",small:true},{k:"e",ph:"Einheit, z. B. Kindern",small:true}],
+    ex:[{t:"Konnten einen Hilfeweg nennen",a:"32",g:"38",e:"Kindern"},{t:"Konnten erklären, wie sie nach einer Pause wieder einsteigen",a:"25",g:"38",e:"Kindern"},{t:"Fanden die Anleitung innerhalb einer Minute",a:"1",g:"2",e:"Vertretungskräften"}]},
+   {id:"b8_aend",type:"list",max:3,numbered:true,label:"Was wir aufgrund der Rückmeldung geändert haben",ex:["Der Kinderrat schlug ein unauffälliges Handzeichen als Alternative zur sichtbaren Pausenkarte vor. Dieses wurde aufgenommen.","Auf Wunsch der Vertretungskräfte steht die einseitige Ablaufkarte künftig vorne in der Mappe.","Für den Wiedereinstieg nennen Lehrkräfte und OGS-Kräfte jetzt ausdrücklich zwei konkrete Möglichkeiten."]},
+   {id:"b8_plan",type:"pairs",max:5,label:"Zeitplan (Seite 12)",cols:[{k:"d",ph:"Termin",small:true},{k:"a",ph:"Aufgabe und Verantwortung",area:true},{k:"e",ph:"Woran wir die Umsetzung erkennen",area:true}],
+    ex:[{d:"23.–27.11.2026",a:"Stufenleitungen führen die Vereinbarung in allen acht Klassen ein. OGS-Leitung bespricht sie mit den Nachmittagsteams.",e:"Jede Gruppe hat die Wahlmöglichkeiten ausprobiert. Jede Mappe enthält die aktuelle Karte."},{d:"11.12.2026",a:"Stellvertretende Schulleitung bittet zwei Vertretungskräfte um einen Suchtest.",e:"Beide finden die Karte in einer Minute. Andernfalls wird ihr Ablageort am selben Tag korrigiert."},{d:"19.02.2027",a:"Klassenleitungen und OGS sammeln freiwillige Rückmeldungen per Symbolkarte, Gespräch oder anonymer Abgabe.",e:"Getrennte Fragen zu Hilfeweg, Wahl und Rückkehr. Zahl der Antworten und offene Rückmeldungen liegen vor."},{d:"26.02.2027",a:"Steuergruppe wertet mit Kindervertretung und OGS aus.",e:"Zielwerte: mindestens 80 % der Antwortenden kennen Hilfeweg und Wiedereinstieg. Auch einzelne Hinweise auf Beschämung werden gesondert geprüft."}]},
+   {id:"b8_fort1",type:"line",label:"Fortschreibung – was wird protokolliert?",ex:"Die Steuergruppe protokolliert je Vereinbarung – jeweils mit Begründung, verantwortlicher Funktion und Frist:"},
+   {id:"b8_fort2",type:"text",rows:3,label:"Fortschreibung – wie geht es nach der Entscheidung weiter?",ex:"Die Schulleitung bringt Änderungen am Schulprogramm in die zuständigen Gremien ein. Nach Freigabe tauscht die Stufenleitung die Karten aus. Die Kinder erhalten im nächsten Klassenrat eine Rückmeldung über ihre Vorschläge."}
+  ]},
+ {id:"vk", nr:"", nav:"Vertretungskarte", kicker:"Kurzfassung für die Vertretungsmappe", title:"Vertretungskarte",
+  lead:"So klingt die Vereinbarung im Alltag – auf einer Seite.",
+  impulse:["Schreiben Sie aus Sicht einer Vertretungskraft in Ich-Form.","Setzen Sie wörtliche Sätze in „deutsche Anführungszeichen“ – sie werden auf der Karte hervorgehoben.","Testen Sie die Karte: Findet und versteht eine Vertretung sie in einer Minute?"],
+  fields:[
+   {id:"vk_titel",type:"line",label:"Überschrift der Karte",ex:"So klingt die Vereinbarung im Alltag"},
+   {id:"vk_felder",type:"pairs",max:4,numbered:true,label:"Vier Situationen",cols:[{k:"k",ph:"Situation, z. B. Vor dem Unterricht"},{k:"t",ph:"Was ich tue und sage",area:true}],
+    ex:[{k:"Vor dem Unterricht",t:"Ich schaue nach, wo die beiden einsehbaren Plätze im Klassenraum sind. Ich lese auf der ersten Seite der Vertretungsmappe nach, wie die Klasse eine kurze Pause signalisiert und über welchen Dienstweg ich eine zweite Person erreiche."},{k:"Wenn ein Kind eine Pause braucht",t:"Ich spreche es leise an. „Du kannst hier am Rand sitzen oder den Ruheplatz nehmen. Du kannst mir auch zeigen, was du möchtest.“ Das Kind kann an seinem Platz bleiben. Ich vereinbare, wann ich wieder ansprechbar auf das Kind zukomme. Die Aufsicht bleibt geklärt."},{k:"Wenn das Kind wieder einsteigen möchte",t:"„Möchtest du erst zuhören oder mit mir die erste Aufgabe anschauen?“ Das Kind muss der Klasse seine Pause nicht erklären. Später frage ich kurz, welche Vereinbarung auch beim nächsten Mal helfen würde."},{k:"Wenn der Ablauf an seine Grenze kommt",t:"Bei Hinweisen auf Gewalt oder unmittelbare Gefahr nutze ich den örtlichen Schutz- oder Notfallweg. Persönliche Fallinformationen werden ausschließlich über die dafür vorgesehenen Wege weitergegeben."}]},
+   {id:"vk_box",type:"text",rows:3,label:"Hinweisbox unten (optional)",hint:"Bleibt das Feld leer, entfällt die Box.",ex:"Lesen Sie die Karte aus Sicht einer Vertretung und eines Kindes. Welche Aussage wäre an Ihrer Schule bereits verlässlich? Wo verändern Raum, Aufsicht oder Kommunikationsbedarf den Ablauf? Übertragen Sie zunächst eine Vereinbarung in Ihre Schulvorlage und halten Sie fest, wer ihre Umsetzbarkeit mit den Kindern prüft."}
+  ]}
+];
+
+/* Seiten je Abschnitt */
+var PAGES = [
+ {sec:"start",fn:pCover,label:"Titel"},{sec:"intro",fn:pIntro,label:"Über dieses Konzept"},
+ {sec:"b1",fn:pB1,label:"Baustein 01"},{sec:"b2",fn:pB2,label:"Baustein 02"},{sec:"b3",fn:pB3,label:"Baustein 03"},
+ {sec:"b4",fn:pB4,label:"Baustein 04"},{sec:"b5",fn:pB5a,label:"Baustein 05 (1/2)"},{sec:"b5",fn:pB5b,label:"Baustein 05 (2/2)"},
+ {sec:"b6",fn:pB6,label:"Baustein 06"},{sec:"b7",fn:pB7,label:"Baustein 07"},{sec:"b8",fn:pB8a,label:"Baustein 08 (1/2)"},
+ {sec:"b8",fn:pB8b,label:"Baustein 08 (2/2)"},{sec:"vk",fn:pVK,label:"Vertretungskarte"}
+];
+
+var FIELDS = {}; SECTIONS.forEach(function(s){ s.fields.forEach(function(f){ FIELDS[f.id]=f; f.sec=s.id; }); });
+
+/* =========================================================
+   Zustand
+   ========================================================= */
+var KEY="tpd-konzeptwerkstatt-v1";
+var S = {}; var cur = "start"; var pvAll = false;
+function blank(){
+  var o={};
+  Object.keys(FIELDS).forEach(function(id){
+    var f=FIELDS[id];
+    if(f.def){ o[id]=clone(f.ex); }
+    else if(f.type==="list") o[id]=[""];
+    else if(f.type==="pairs") o[id]=[emptyRow(f)];
+    else o[id]="";
+  });
+  return o;
+}
+function example(){ var o={}; Object.keys(FIELDS).forEach(function(id){ o[id]=clone(FIELDS[id].ex); }); return o; }
+function emptyRow(f){ var r={}; f.cols.forEach(function(c){ r[c.k]=""; }); return r; }
+function clone(x){ return JSON.parse(JSON.stringify(x)); }
+function load(){ try{ var t=localStorage.getItem(KEY); if(t){ var d=JSON.parse(t); S=Object.assign(blank(), d.data||{}); cur=d.cur||"start"; return; } }catch(e){} S=blank(); }
+var saveT; function persist(){ clearTimeout(saveT); saveT=setTimeout(function(){ try{ localStorage.setItem(KEY, JSON.stringify({data:S,cur:cur})); }catch(e){} },300); }
+
+/* =========================================================
+   Hilfsfunktionen
+   ========================================================= */
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+function has(v){ if(Array.isArray(v)) return v.some(function(x){ return typeof x==="string"? x.trim() : Object.keys(x).some(function(k){return String(x[k]).trim();}); }); return !!String(v||"").trim(); }
+function ph(label){ return '<span class="ph">['+esc(label)+']</span>'; }
+function T(id,alt){ var v=S[id]; return has(v)? esc(v).replace(/\n/g,"<br>") : ph(alt||FIELDS[id].label); }
+function P(id){ var v=S[id]; if(!has(v)) return '<p>'+ph(FIELDS[id].label)+'</p>';
+  return String(v).split(/\n\s*\n/).map(function(x){ return '<p>'+esc(x.trim()).replace(/\n/g,"<br>")+'</p>'; }).join('<div style="height:8px"></div>'); }
+function L(id){ var v=(S[id]||[]).filter(function(x){return String(x).trim();}); return v.length? v : null; }
+function R(id){ var v=(S[id]||[]).filter(function(r){ return Object.keys(r).some(function(k){return String(r[k]).trim();}); }); return v.length? v : null; }
+function cv(r,k,label){ return String(r[k]||"").trim()? esc(r[k]) : ph(label); }
+function sayify(s){ return esc(s).replace(/„([^“]*)“/g,'<span class="say">„$1“</span>').replace(/\n/g,"<br>"); }
+function schoolName(){ return has(S.schule)? esc(S.schule) : "Unsere Schule"; }
+function status(){ return has(S.hinweis)? esc(S.hinweis) : "Entwurf"; }
+
+var IC = {
+ quote:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7EAFB2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+ info:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#35616C" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="7.5" r=".6" fill="#35616C"/></svg>',
+ check:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#35616C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>',
+ shield:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#35616C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+ alert:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#35616C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r=".6" fill="#35616C"/></svg>',
+ phone:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#35616C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
+ search:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#35616C" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'
+};
+
+/* =========================================================
+   Seiten-Bausteine
+   ========================================================= */
+function frame(inner, right, num, blob){
+  return '<div class="page">'+
+   (blob||'<div class="blob" style="right:-130px;top:-130px;width:320px;height:320px;background:#7EAFB2;opacity:.16"></div>')+
+   '<div class="meta hd rel"><span>Traumasensibles Schulkonzept · '+schoolName()+'</span><span>'+right+'</span></div>'+
+   inner+
+   '<div class="meta ft rel"><span><b style="color:#35616C">Traumapädagogik Döhler</b> · Konzeptwerkstatt · '+status()+'</span><span>'+num+'</span></div></div>';
+}
+function head(sec, cont){
+  var s=SECTIONS.filter(function(x){return x.id===sec;})[0];
+  if(cont) return '<div class="rel" style="margin-top:36px;display:flex;flex-direction:column;gap:6px"><div class="kicker">'+s.kicker+' · Fortsetzung</div><h1 class="h2">'+esc(cont)+'</h1></div>';
+  return '<div class="rel" style="display:flex;gap:24px;align-items:flex-end;margin-top:40px"><div class="big" aria-hidden="true">'+s.nr+'</div><div style="display:flex;flex-direction:column;gap:6px"><div class="kicker">'+s.kicker+'</div><h1 class="h2">'+esc(s.title)+'</h1></div></div>'+
+   '<p class="lead rel" style="margin-top:16px">'+esc(s.lead)+'</p>';
+}
+function bul(arr){ return '<div style="display:flex;flex-direction:column;gap:10px">'+arr.map(function(x){ return '<div class="li"><div class="dot"></div><p>'+esc(x)+'</p></div>'; }).join("")+'</div>'; }
+
+function pCover(){
+  var vs=L("versprechen")||[null,null,null];
+  return '<div class="page" style="padding:64px">'+
+   '<div class="blob" style="right:-180px;bottom:-160px;width:560px;height:560px;background:#7EAFB2;opacity:.22"></div>'+
+   '<div class="blob" style="right:120px;bottom:250px;width:140px;height:140px;background:#35616C;opacity:.10"></div>'+
+   '<div class="blob" style="left:-90px;top:-90px;width:240px;height:240px;background:#7EAFB2;opacity:.14"></div>'+
+   '<div class="rel" style="display:flex;justify-content:space-between;align-items:baseline"><div class="serif" style="font-size:20px;font-weight:600;color:#35616C">Traumapädagogik Döhler</div><div class="meta">Konzeptwerkstatt · '+status()+'</div></div>'+
+   '<div class="rel" style="margin-top:96px;display:flex;flex-direction:column;gap:18px">'+
+    '<div class="kicker">'+T("schule")+(has(S.zusatz)?' · '+esc(S.zusatz):'')+'</div>'+
+    '<h1 class="serif" style="font-size:56px;line-height:1.08;font-weight:600;color:#35616C;text-wrap:balance">'+(has(S.titel)?esc(S.titel):"Unser traumasensibles Schulkonzept")+'</h1>'+
+    '<p class="serif" style="font-size:20px;font-style:italic;line-height:1.4;color:#35616C;max-width:560px">'+T("untertitel")+'</p></div>'+
+   '<div class="rel" style="margin-top:44px;max-width:540px;background:#fff;border:1px solid #D6E5E6;border-radius:22px;padding:32px 34px;display:flex;flex-direction:column;gap:14px">'+
+    '<div class="kicker">Worauf Kinder sich bei uns verlassen können</div>'+
+    vs.map(function(x){ return '<div style="display:flex;gap:14px"><div style="width:10px;height:10px;border-radius:50%;background:#7EAFB2;flex:none;margin-top:12px"></div><p class="serif" style="font-size:20px;line-height:1.45;color:#263236">'+(x?esc(x):ph("Ich …"))+'</p></div>'; }).join("")+
+   '</div>'+
+   '<div class="rel" style="margin-top:auto;padding-top:30px;display:flex;gap:32px">'+
+    '<div style="display:flex;flex-direction:column;gap:2px"><span class="kicker" style="font-size:11px">Fassung</span><span style="font-size:14px">'+T("fassung","Nr.")+' · gültig ab '+T("gueltig","Datum")+'</span></div>'+
+    '<div style="display:flex;flex-direction:column;gap:2px"><span class="kicker" style="font-size:11px">Schule</span><span style="font-size:14px">'+T("eckdaten","Eckdaten")+'</span></div>'+
+    '<div style="display:flex;flex-direction:column;gap:2px"><span class="kicker" style="font-size:11px">Status</span><span style="font-size:14px">'+status()+'</span></div>'+
+   '</div></div>';
+}
+function pIntro(){
+  var ms=R("meilensteine")||[{},{},{}];
+  var titles=["Ausgangslage und Ziele","Gemeinsame Haltung","Traumasensibler Schulalltag","Umgang mit Belastung","Schutz und Krisenwege","Familien und Netzwerk","Teamkultur und Entlastung","Umsetzung und Überprüfung"];
+  var inner='<div class="rel" style="margin-top:36px;display:flex;flex-direction:column;gap:6px"><div class="kicker">Einführung</div><h1 class="h2">Über dieses Konzept</h1></div>'+
+   '<div class="body rel" style="gap:18px">'+
+   '<div class="card"><h2 class="h3">Geltungsbereich und Trägerschaft im Team</h2>'+P("geltung")+'</div>'+
+   '<div><h2 class="h3">Fassung '+T("fassung","Nr.")+' · gültig ab '+T("gueltig","Datum")+'</h2><p style="margin-bottom:12px">'+T("redaktion")+'</p>'+
+    '<div class="grid4" style="grid-template-columns:repeat('+Math.max(ms.length,1)+',minmax(0,1fr))">'+ms.map(function(m,i){ return '<div style="border-top:3px solid '+(i===ms.length-1&&ms.length>1?'#35616C':'#7EAFB2')+';padding-top:8px"><div style="font-weight:700;color:#35616C">'+cv(m,"d","Datum")+'</div><div style="font-size:14px">'+cv(m,"t","Schritt")+'</div></div>'; }).join("")+'</div></div>'+
+   (has(S.verwendung)?'<div class="soft icn">'+IC.info+'<div><h2 class="h3">Hinweis</h2>'+P("verwendung")+'</div></div>':'')+
+   '<div><h2 class="h3" style="margin-bottom:10px">Die acht Bausteine</h2><div class="grid4">'+titles.map(function(t,i){ return '<div class="card" style="padding:14px 16px"><div class="serif" style="font-size:26px;color:#4F8A90;line-height:1">0'+(i+1)+'</div><div style="font-weight:600;margin-top:6px;line-height:1.3">'+t+'</div></div>'; }).join("")+'</div></div>'+
+   '</div>';
+  return frame(inner,"Einführung",2);
+}
+function pB1(){
+  var z=R("b1_zahlen"), g=R("b1_ziele")||[{},{},{}];
+  var inner=head("b1")+'<div class="body rel">'+
+   '<div class="card"><h2 class="h3">Was wir beobachtet haben</h2>'+P("b1_beob")+
+    (z?'<div class="grid2" style="margin-top:16px;grid-template-columns:repeat('+z.length+',minmax(0,1fr))">'+z.map(function(r){ return '<div class="soft" style="padding:14px 18px"><div class="serif" style="font-size:30px;font-weight:600;color:#35616C;line-height:1.1">'+cv(r,"w","Zahl")+'</div><div style="font-size:14px">'+cv(r,"t","Bedeutung")+'</div></div>'; }).join("")+'</div>':'')+'</div>'+
+   '<div><h2 class="h3" style="margin-bottom:10px">Unsere Ziele</h2><div class="grid3" style="grid-template-columns:repeat('+g.length+',minmax(0,1fr))">'+g.map(function(r){ return '<div class="card" style="padding:16px 18px"><div class="kicker" style="margin-bottom:6px">'+cv(r,"k","Stichwort")+'</div><p style="font-size:14.5px;line-height:1.5">'+cv(r,"t","Ziel")+'</p></div>'; }).join("")+'</div></div>'+
+   '<div><h2 class="h3">So überprüfen wir die Ziele</h2>'+P("b1_pruef")+'</div></div>';
+  return frame(inner,"Baustein 01 von 08",3);
+}
+function pB2(){
+  var m=L("b2_merkmale");
+  var inner=head("b2")+'<div class="body rel">'+P("b2_intro")+
+   '<div class="quote">'+IC.quote+'<p>'+T("b2_satz","Beispielsatz")+'</p></div>'+P("b2_weiter")+
+   '<div class="card"><h2 class="h3" style="margin-bottom:12px">Woran unsere Haltung erkennbar wird</h2>'+(m?bul(m):'<p>'+ph("Merkmale")+'</p>')+'</div></div>';
+  return frame(inner,"Baustein 02 von 08",4);
+}
+function pB3(){
+  var f=L("b3_fragen"), st=L("b3_schritte")||[null,null,null];
+  var inner=head("b3")+'<div class="body rel">'+
+   '<div class="card"><h2 class="h3">Ankommen und Veränderungen ankündigen</h2>'+P("b3_ankommen")+
+    (f?'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">'+f.map(function(x){return '<span class="qchip">'+esc(x)+'</span>';}).join("")+'</div>':'')+'</div>'+
+   '<div><h2 class="h3" style="margin-bottom:10px">Übergang in den Ganztag</h2><div class="grid3" style="margin-bottom:12px;grid-template-columns:repeat('+st.length+',minmax(0,1fr))">'+st.map(function(x,i){ return '<div class="step"><div class="sn">'+(i+1)+'</div>'+(x?esc(x):ph("Schritt"))+'</div>'; }).join("")+'</div><p>'+T("b3_liste")+'</p></div>'+
+   '<div class="card"><h2 class="h3">Beteiligung und Prüfung</h2>'+P("b3_beteiligung")+
+    (has(S.b3_pruef)?'<div class="soft icn" style="margin-top:14px;padding:14px 18px">'+IC.search+'<p><b>Prüffrage:</b> '+esc(S.b3_pruef)+'</p></div>':'')+'</div></div>';
+  return frame(inner,"Baustein 03 von 08",5);
+}
+function pB4(){
+  var o=L("b4_optionen")||[null,null,null];
+  var inner=head("b4")+'<div class="body rel">'+
+   '<div class="card"><h2 class="h3">Rückzug und Rückkehr nach der Pause</h2>'+P("b4_rueckzug")+
+    (has(S.b4_regel)?'<div class="soft icn" style="margin-top:14px;padding:14px 18px">'+IC.shield+'<p>'+esc(S.b4_regel)+'</p></div>':'')+'</div>'+
+   '<div style="display:flex;flex-direction:column;gap:14px"><h2 class="h3" style="margin-bottom:0">Den Anschluss wiederfinden</h2>'+
+    '<div class="quote">'+IC.quote+'<p>„'+T("b4_satz","Satz")+'“</p></div>'+
+    '<p>Beim nächsten Kontakt kann das Kind wählen:</p><div class="grid3" style="grid-template-columns:repeat('+o.length+',minmax(0,1fr))">'+o.map(function(x){return '<div class="opt">'+(x?esc(x):ph("Möglichkeit"))+'</div>';}).join("")+'</div>'+P("b4_weiter")+'</div></div>';
+  return frame(inner,"Baustein 04 von 08",6);
+}
+function pB5a(){
+  var e2=L("b5_e2");
+  var inner=head("b5")+'<div class="body rel">'+
+   '<div class="card"><div class="kicker">Ebene 1</div><h2 class="h3">Pädagogische Unterstützung im Alltag</h2>'+P("b5_e1")+'</div>'+
+   '<div class="card"><div class="kicker">Ebene 2</div><h2 class="h3">Hinweise auf Gewalt oder Gefährdung</h2><p style="margin-bottom:12px">Berichtet ein Kind von Gewalt, gilt für die angesprochene Person:</p>'+
+    '<div style="display:flex;flex-direction:column;gap:10px">'+(e2||[null]).map(function(x){ return '<div class="li">'+IC.check+'<p>'+(x?esc(x):ph("Grundsatz"))+'</p></div>'; }).join("")+'</div>'+
+    (has(S.b5_sorge)?'<div class="soft" style="margin-top:14px;padding:14px 18px"><p>'+esc(S.b5_sorge)+'</p></div>':'')+'</div>'+
+   '<div class="alert">'+IC.alert+P("b5_notfall")+'</div></div>';
+  return frame(inner,"Baustein 05 von 08",7);
+}
+function pB5b(){
+  var o=R("b5_orte");
+  var inner=head("b5","Schutz und Krisenwege")+'<div class="body rel">'+
+   '<div class="card"><h2 class="h3" style="margin-bottom:12px">Wer erreichbar ist</h2>'+
+    '<div style="display:grid;grid-template-columns:1fr 40px 1fr;gap:6px;margin-bottom:14px"><div class="node"><div class="kicker" style="font-size:11px">Erste interne Anlaufstelle</div>'+T("b5_stelle1","Funktion")+'</div><div class="arrow">→</div><div class="node"><div class="kicker" style="font-size:11px">Bei Abwesenheit</div>'+T("b5_stelle2","Funktion")+'</div></div>'+
+    (has(S.b5_sonder)?'<div class="soft" style="padding:14px 18px;margin-bottom:12px">'+P("b5_sonder")+'</div>':'')+
+    '<p>Bei unmittelbarer Gefahr gilt immer zuerst der Notfallplan (siehe vorherige Seite).</p></div>'+
+   '<div class="card"><h2 class="h3">Wo das Team die Wege findet</h2>'+P("b5_fund")+
+    (o?'<div class="grid3" style="margin:14px 0;grid-template-columns:repeat('+o.length+',minmax(0,1fr))">'+o.map(function(r){ return '<div class="soft" style="padding:12px 14px;font-size:14px"><b>'+cv(r,"k","Art")+'</b><br>'+cv(r,"t","Ort")+'</div>'; }).join("")+'</div>':'<div style="height:12px"></div>')+P("b5_kontrolle")+'</div>'+
+   '<div style="display:flex;flex-direction:column;gap:6px"><div class="kicker">Einordnung für Schulen in NRW</div><p>Das schulische Schutzkonzept gegen Gewalt und sexuellen Missbrauch hat nach § 42 Abs. 6 SchulG NRW einen eigenen Auftrag und bedarf der Zustimmung der Schulkonferenz. Dieses Konzept beschreibt die pädagogische Arbeit und ihren Anschluss an die örtlichen Verfahren.</p><p class="meta">Quelle: Schulgesetz NRW, insbesondere §§ 3, 42 und 65, amtliche Fassung: <a href="https://bass.schule.nrw/6043.htm">bass.schule.nrw/6043.htm</a></p></div></div>';
+  return frame(inner,"Baustein 05 von 08 · Fortsetzung",8);
+}
+function pB6(){
+  var st=R("b6_stufen")||[{},{},{}];
+  var inner=head("b6")+'<div class="body rel">'+
+   '<div class="card"><h2 class="h3">Information und Mitsprache</h2>'+P("b6_info")+'</div>'+
+   '<div class="card"><h2 class="h3" style="margin-bottom:12px">Beratung vermitteln</h2><div class="grid3" style="margin-bottom:12px;grid-template-columns:repeat('+st.length+',minmax(0,1fr))">'+st.map(function(r,i){ return '<div class="soft" style="padding:12px 14px;font-size:14px"><b>'+(i+1)+' · '+cv(r,"k","Stufe")+'</b><br>'+cv(r,"t","Wer?")+'</div>'; }).join("")+'</div>'+P("b6_beratung")+
+    (has(S.b6_daten)?'<div class="icn" style="margin-top:14px;border-top:1px solid #D6E5E6;padding-top:14px">'+IC.shield+'<div style="font-size:14px">'+P("b6_daten")+'</div></div>':'')+'</div>'+
+   '<div class="soft"><h2 class="h3">Rückmeldung</h2>'+P("b6_rueck")+'</div></div>';
+  return frame(inner,"Baustein 06 von 08",9);
+}
+function pB7(){
+  var q=L("b7_fragen")||[null,null,null];
+  var inner=head("b7")+'<div class="body rel">'+
+   '<div class="card"><h2 class="h3">Unterstützung anfordern</h2><p>'+T("b7_intro")+'</p>'+
+    '<div style="display:flex;align-items:center;gap:14px;background:#E6F0F0;border-radius:14px;padding:14px 18px;margin:14px 0">'+IC.phone+'<span class="serif" style="font-size:22px;font-style:italic;color:#35616C">„'+T("b7_code","Satz")+'“</span></div>'+P("b7_ablauf")+'</div>'+
+   '<div style="display:flex;flex-direction:column;gap:12px"><h2 class="h3" style="margin-bottom:0">Kollegial nachbereiten</h2><p>'+T("b7_nach")+'</p>'+
+    '<div class="grid3" style="grid-template-columns:repeat('+q.length+',minmax(0,1fr))">'+q.map(function(x){return '<div class="q">'+(x?esc(x):ph("Frage"))+'</div>';}).join("")+'</div>'+P("b7_schluss")+'</div></div>';
+  return frame(inner,"Baustein 07 von 08",10);
+}
+function pB8a(){
+  var b=R("b8_befunde"), a=L("b8_aend")||[null];
+  var inner=head("b8")+'<div class="body rel">'+
+   '<div class="card"><h2 class="h3">Erprobung und Befunde</h2>'+P("b8_erprob")+
+    (b?'<div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">'+b.map(function(r){
+       var n=parseFloat(String(r.a).replace(",",".")), g=parseFloat(String(r.g).replace(",",".")), pc=(g>0&&n>=0)?Math.min(100,n/g*100):0;
+       return '<div><div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-bottom:5px"><span>'+cv(r,"t","Aussage")+'</span><b style="color:#35616C;white-space:nowrap">'+cv(r,"a","n")+' von '+cv(r,"g","n")+' '+esc(r.e||"")+'</b></div><div class="track"><div class="fill" style="width:'+pc.toFixed(1)+'%"></div></div></div>'; }).join("")+'</div>':'')+
+    '<div class="soft" style="margin-top:16px;padding:14px 18px"><p>Die Rückmeldungen zeigen, welche Abläufe noch erklärt werden müssen. Sie erlauben <b>keine Aussage über die psychische Gesundheit</b> einzelner Kinder.</p></div></div>'+
+   '<div><h2 class="h3" style="margin-bottom:12px">Was wir aufgrund der Rückmeldung geändert haben</h2><div style="display:flex;flex-direction:column;gap:12px">'+a.map(function(x,i){ return '<div class="ch"><div class="cn">'+(i+1)+'</div><p>'+(x?esc(x):ph("Änderung"))+'</p></div>'; }).join("")+'</div></div></div>';
+  return frame(inner,"Baustein 08 von 08",11);
+}
+function pB8b(){
+  var rows=R("b8_plan")||[{}];
+  var inner=head("b8","Zeitplan und Fortschreibung")+'<div class="body rel">'+
+   '<table class="tb"><thead><tr><th>Termin</th><th>Aufgabe und Verantwortung</th><th>Woran wir die Umsetzung erkennen</th></tr></thead><tbody>'+
+    rows.map(function(r){ return '<tr><td>'+cv(r,"d","Termin")+'</td><td>'+cv(r,"a","Aufgabe")+'</td><td>'+cv(r,"e","Kriterium")+'</td></tr>'; }).join("")+'</tbody></table>'+
+   '<div class="card"><h2 class="h3">Fortschreibung</h2><p>'+T("b8_fort1")+'</p><div style="display:flex;gap:8px;margin:12px 0 14px"><span class="chip">beibehalten</span><span class="chip">ändern</span><span class="chip">beenden</span></div>'+P("b8_fort2")+'</div></div>';
+  return frame(inner,"Baustein 08 von 08 · Fortsetzung",12);
+}
+function pVK(){
+  var c=R("vk_felder")||[{},{},{},{}];
+  var inner='<div class="rel" style="margin-top:36px;display:flex;flex-direction:column;gap:6px"><div class="kicker">Kurzfassung für die Vertretungsmappe</div><h1 class="h2">'+(has(S.vk_titel)?esc(S.vk_titel):"So klingt die Vereinbarung im Alltag")+'</h1></div>'+
+   '<div class="body rel"><div class="grid2" style="gap:14px">'+c.map(function(r,i){ return '<div class="cell"><h2 class="h3">'+(i+1)+' · '+cv(r,"k","Situation")+'</h2><p>'+(String(r.t||"").trim()?sayify(r.t):ph("Was ich tue und sage"))+'</p></div>'; }).join("")+'</div>'+
+   (has(S.vk_box)?'<div class="soft">'+P("vk_box")+'</div>':'')+
+   '<div style="margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #C9DCDD;padding-top:16px"><div style="display:flex;flex-direction:column;gap:2px"><div class="serif" style="font-size:17px;font-weight:600;color:#35616C">Traumapädagogik Döhler</div><div style="font-size:13px">Etienne Döhler · Traumapädagoge und traumazentrierter Fachberater (DeGPT)</div><div style="font-size:13px"><a href="https://traumapaedagogik-doehler.de">traumapaedagogik-doehler.de</a> · <a href="mailto:traumapaedagogik.doehler@gmail.com">traumapaedagogik.doehler@gmail.com</a></div></div></div></div>';
+  return frame(inner,"Vertretungskarte",13);
+}
+
+/* =========================================================
+   Formular
+   ========================================================= */
+var $=function(id){return document.getElementById(id);};
+function secDone(s){ var n=0; s.fields.forEach(function(f){ if(has(S[f.id])) n++; }); return [n,s.fields.length]; }
+function ring(n,t){ var p=t?n/t:0, r=8, c=2*Math.PI*r;
+  return '<svg class="ring" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="'+r+'" fill="none" stroke="currentColor" stroke-opacity=".2" stroke-width="2.5"/><circle cx="10" cy="10" r="'+r+'" fill="none" stroke="'+(p>=1?'#7EAFB2':'currentColor')+'" stroke-width="2.5" stroke-dasharray="'+(c*p)+' '+c+'" transform="rotate(-90 10 10)" stroke-linecap="round"/>'+(p>=1?'<path d="m6.5 10 2.4 2.4 4.6-4.8" fill="none" stroke="#7EAFB2" stroke-width="2" stroke-linecap="round"/>':'')+'</svg>'; }
+var overPages={};
+function renderNav(){
+  var tot=0,done=0;
+  var h='<h3>Arbeitsschritte</h3>';
+  SECTIONS.forEach(function(s){ var d=secDone(s); tot+=d[1]; done+=d[0];
+    var ov=PAGES.some(function(p,i){ return p.sec===s.id && overPages[i]; });
+    h+='<button class="step-btn'+(s.id===cur?' active':'')+'" data-s="'+s.id+'"><span class="nr">'+(s.nr||'·')+'</span><span>'+esc(s.nav)+(ov?'<span class="warn" title="Seite zu voll">!</span>':'')+'</span>'+ring(d[0],d[1])+'</button>'; });
+  var pc=Math.round(done/tot*100);
+  h+='<div class="progress">'+pc+' % ausgefüllt<div class="bar"><i style="width:'+pc+'%"></i></div></div>';
+  h+='<div style="margin:20px 8px 0;display:flex;flex-direction:column;gap:8px"><button class="add" id="bReset" style="text-align:left">Alles leeren und neu beginnen</button></div>';
+  $("nav").innerHTML=h;
+}
+function fieldHTML(f){
+  var h='<div class="field" data-f="'+f.id+'"><label for="in_'+f.id+'">'+esc(f.label)+'</label>'+(f.hint?'<div class="hint">'+esc(f.hint)+'</div>':'');
+  var v=S[f.id];
+  if(f.type==="line") h+='<input type="text" id="in_'+f.id+'" data-k="v" value="'+esc(v)+'" placeholder="'+esc(f.ph||"")+'">';
+  else if(f.type==="text") h+='<textarea id="in_'+f.id+'" data-k="v" rows="'+(f.rows||4)+'" placeholder="'+esc(f.ph||"")+'">'+esc(v)+'</textarea>';
+  else if(f.type==="list"){
+    v.forEach(function(x,i){ h+='<div class="row">'+(f.numbered?'<div class="num">'+(i+1)+'</div>':'')+'<div class="cols"><textarea rows="2" data-i="'+i+'" placeholder="'+esc(f.ph||"")+'">'+esc(x)+'</textarea></div><button class="icon-btn" data-del="'+i+'" title="Eintrag entfernen" aria-label="Eintrag entfernen">'+X+'</button></div>'; });
+    if(v.length<(f.max||8)) h+='<button class="add" data-addrow>+ Eintrag hinzufügen</button>';
+  } else if(f.type==="pairs"){
+    var tmpl=f.cols.map(function(c){ return c.area? 'minmax(0,2fr)' : c.small? 'minmax(0,.8fr)' : 'minmax(0,1.2fr)'; }).join(" ");
+    v.forEach(function(r,i){ h+='<div class="row">'+(f.numbered?'<div class="num">'+(i+1)+'</div>':'')+'<div class="cols" style="grid-template-columns:'+tmpl+'">'+f.cols.map(function(c){
+        return c.area? '<textarea rows="3" data-i="'+i+'" data-c="'+c.k+'" placeholder="'+esc(c.ph)+'">'+esc(r[c.k])+'</textarea>' : '<input type="text" data-i="'+i+'" data-c="'+c.k+'" value="'+esc(r[c.k])+'" placeholder="'+esc(c.ph)+'">'; }).join("")+'</div><button class="icon-btn" data-del="'+i+'" title="Zeile entfernen" aria-label="Zeile entfernen">'+X+'</button></div>'; });
+    if(v.length<(f.max||8)) h+='<button class="add" data-addrow>+ Zeile hinzufügen</button>';
+  }
+  h+='<div class="ex-bar"><button class="chipbtn" data-exshow>Beispiel ansehen</button><button class="chipbtn" data-exuse>Beispiel übernehmen</button></div>';
+  h+='<div class="example"><div class="t">Beispiel · Grundschule am Birkenweg</div>'+exHTML(f)+'</div>';
+  return h+'</div>';
+}
+var X='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+function exHTML(f){
+  if(f.type==="list") return '<ul>'+f.ex.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>';
+  if(f.type==="pairs") return '<ul>'+f.ex.map(function(r){ return '<li>'+f.cols.map(function(c){return esc(r[c.k]);}).filter(Boolean).join(" – ")+'</li>'; }).join("")+'</ul>';
+  return esc(f.ex).replace(/\n/g,"<br>");
+}
+function renderForm(){
+  var s=SECTIONS.filter(function(x){return x.id===cur;})[0], idx=SECTIONS.indexOf(s);
+  var h='<div class="kick">'+esc(s.kicker)+'</div><h1>'+esc(s.title)+'</h1><p class="lead">'+esc(s.lead)+'</p>';
+  h+='<div class="impulse"><b>Impulse für Ihr Team</b><ul>'+s.impulse.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>';
+  if(s.fixnote) h+='<div class="fixnote">'+esc(s.fixnote)+'</div>';
+  h+=s.fields.map(fieldHTML).join("");
+  h+='<div class="stepnav">'+(idx>0?'<button class="tbtn" data-go="'+SECTIONS[idx-1].id+'">← '+esc(SECTIONS[idx-1].nav)+'</button>':'<span></span>')+
+     (idx<SECTIONS.length-1?'<button class="tbtn primary" data-go="'+SECTIONS[idx+1].id+'">'+esc(SECTIONS[idx+1].nav)+' →</button>':'<button class="tbtn primary" id="bPrint2">Fertig – drucken / PDF</button>')+'</div>';
+  $("form").innerHTML=h; $("form").scrollTop=0;
+}
+
+/* =========================================================
+   Vorschau
+   ========================================================= */
+function renderPreview(){
+  var el=$("preview");
+  var list=PAGES.map(function(p,i){return i;}).filter(function(i){ return pvAll || PAGES[i].sec===cur; });
+  var h='<div class="pv-head"><b>Vorschau</b><span class="seg"><button data-pv="cur" class="'+(pvAll?'':'on')+'">Dieser Schritt</button><button data-pv="all" class="'+(pvAll?'on':'')+'">Alle 13 Seiten</button></span></div>';
+  list.forEach(function(i){ h+='<div class="pwrap" data-p="'+i+'"><div class="plabel"><span>Seite '+(i+1)+' · '+PAGES[i].label+'</span><span class="over"></span></div><div class="pbox"><div class="pinner">'+PAGES[i].fn()+'</div></div></div>'; });
+  el.innerHTML=h; scalePreview();
+}
+function scalePreview(){
+  var el=$("preview"); if(!el.offsetParent && getComputedStyle(el).display==="none") return;
+  var w=Math.min(el.clientWidth-40, 794), s=w/794;
+  el.querySelectorAll(".pwrap").forEach(function(pw){
+    var inner=pw.querySelector(".pinner"), page=inner.firstChild, box=pw.querySelector(".pbox");
+    var idx=+pw.getAttribute("data-p"); var hgt=page.offsetHeight; var over=hgt>1124;
+    page.classList.toggle("over",over); overPages[idx]=over;
+    pw.querySelector(".over").textContent= over? "Seite zu voll – bitte kürzen" : "";
+    inner.style.transform="scale("+s+")"; pw.style.width=w+"px"; box.style.height=(hgt*s)+"px";
+  });
+}
+function checkAllOverflow(){
+  /* misst alle Seiten unsichtbar, damit die Warnungen in der Navigation stimmen */
+  var m=document.createElement("div"); m.style.cssText="position:absolute;left:-9999px;top:0;visibility:hidden";
+  m.innerHTML=PAGES.map(function(p){return p.fn();}).join(""); document.body.appendChild(m);
+  Array.prototype.forEach.call(m.children,function(pg,i){ overPages[i]=pg.offsetHeight>1124; });
+  document.body.removeChild(m);
+}
+var pvT; function refresh(light){
+  clearTimeout(pvT); pvT=setTimeout(function(){ renderPreview(); checkAllOverflow(); renderNav(); },light?250:0);
+}
+
+/* =========================================================
+   Ereignisse
+   ========================================================= */
+function go(id){ cur=id; persist(); renderNav(); renderForm(); renderPreview(); if(innerWidth<=760) setView("form"); }
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.s) return go(t.dataset.s);
+  if(t.dataset.go) return go(t.dataset.go);
+  if(t.dataset.pv){ pvAll=t.dataset.pv==="all"; return renderPreview(); }
+  if(t.dataset.v) return setView(t.dataset.v);
+  var fld=t.closest(".field"); if(fld){
+    var f=FIELDS[fld.dataset.f];
+    if(t.hasAttribute("data-exshow")){ var ex=fld.querySelector(".example"); ex.classList.toggle("open"); t.textContent=ex.classList.contains("open")?"Beispiel ausblenden":"Beispiel ansehen"; return; }
+    if(t.hasAttribute("data-exuse")){
+      var apply=function(){ S[f.id]=clone(f.ex); persist(); var open=fld.querySelector(".example.open"); var n=document.createElement("div"); n.innerHTML=fieldHTML(f); fld.replaceWith(n.firstChild); refresh(); toast("Beispiel übernommen – jetzt an Ihre Schule anpassen"); };
+      return has(S[f.id]) ? ask("Eintrag ersetzen?","Ihr bisheriger Text in „"+f.label+"“ wird durch das Beispiel ersetzt.",apply) : apply();
+    }
+    if(t.hasAttribute("data-addrow")){ S[f.id].push(f.type==="list"?"":emptyRow(f)); persist(); rerenderField(fld,f,true); return refresh(); }
+    if(t.dataset.del!=null){ S[f.id].splice(+t.dataset.del,1); if(!S[f.id].length) S[f.id].push(f.type==="list"?"":emptyRow(f)); persist(); rerenderField(fld,f); return refresh(); }
+  }
+  if(t.id==="bReset") return ask("Alles leeren?","Alle Eingaben werden gelöscht. Sichern Sie Ihren Stand vorher als Datei, wenn Sie ihn behalten möchten.",function(){ S=blank(); go("start"); toast("Neu begonnen"); });
+  if(t.id==="bPrint2") return doPrint();
+});
+function rerenderField(fld,f,focusLast){ var n=document.createElement("div"); n.innerHTML=fieldHTML(f); var nf=n.firstChild; fld.replaceWith(nf);
+  if(focusLast){ var ins=nf.querySelectorAll("[data-i]"); var last=ins[ins.length-1]; if(last){ var i=last.dataset.i; var first=nf.querySelector('[data-i="'+i+'"]'); first&&first.focus(); } } }
+document.addEventListener("input",function(e){
+  var t=e.target, fld=t.closest&&t.closest(".field"); if(!fld) return; var f=FIELDS[fld.dataset.f];
+  if(t.dataset.k==="v") S[f.id]=t.value;
+  else if(f.type==="list") S[f.id][+t.dataset.i]=t.value;
+  else if(f.type==="pairs") S[f.id][+t.dataset.i][t.dataset.c]=t.value;
+  persist(); refresh(true);
+});
+$("bExample").onclick=function(){ ask("Beispiel laden?","Alle Felder werden mit dem Beispiel „Grundschule am Birkenweg“ gefüllt. Ihre bisherigen Eingaben werden dabei überschrieben.",function(){ S=example(); go(cur); toast("Beispiel geladen"); }); };
+var BOXED=/claude/i.test(location.hostname);
+$("bSave").onclick=function(){
+  if(BOXED){ var json=JSON.stringify({tool:"tpd-konzeptwerkstatt",version:1,data:S});
+    ask("Stand sichern","In dieser Vorschau sind Downloads gesperrt. Ich kopiere Ihren Arbeitsstand als Text in die Zwischenablage – fügen Sie ihn in eine Textdatei mit der Endung .json ein. In der eigenständigen Version des Tools wird direkt eine Datei gespeichert.",function(){
+      try{ navigator.clipboard.writeText(json).then(function(){toast("Arbeitsstand kopiert");},function(){toast("Kopieren nicht möglich");}); }catch(e){ toast("Kopieren nicht möglich"); } }); return; }
+  try{
+    var name=(has(S.schule)?S.schule:"Schulkonzept").replace(/[^\wäöüÄÖÜß\- ]+/g,"").trim().replace(/\s+/g,"_");
+    var blob=new Blob([JSON.stringify({tool:"tpd-konzeptwerkstatt",version:1,gespeichert:new Date().toISOString(),data:S},null,2)],{type:"application/json"});
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="Konzeptwerkstatt_"+name+".json"; document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500); toast("Arbeitsstand als Datei gesichert");
+  }catch(err){ toast("Sichern ist in diesem Browser nicht möglich"); }
+};
+$("bLoad").onclick=function(){ $("fileIn").click(); };
+$("fileIn").onchange=function(){ var file=this.files[0]; if(!file) return; var r=new FileReader();
+  r.onload=function(){ try{ var d=JSON.parse(r.result); if(!d.data) throw 0; S=Object.assign(blank(),d.data); go("start"); toast("Arbeitsstand geöffnet"); }catch(err){ toast("Diese Datei kann nicht gelesen werden"); } };
+  r.readAsText(file); this.value=""; };
+$("bPrint").onclick=doPrint;
+function doPrint(){ if(BOXED){ ask("Drucken / PDF","In dieser Vorschau ist Drucken gesperrt. Öffnen Sie das Tool über den direkten Link (z. B. auf traumapaedagogik-doehler.de) – dort erzeugt „Drucken / PDF“ alle 13 Seiten im A4-Format.",function(){}); return; } $("print").innerHTML=PAGES.map(function(p){return p.fn();}).join(""); setTimeout(function(){ window.print(); },60); }
+function setView(v){ var m=$("main"); m.classList.toggle("show-pv",v==="pv"); m.classList.toggle("show-nav",v==="nav");
+  document.querySelectorAll("#mtabs button").forEach(function(b){ b.classList.toggle("on",b.dataset.v===v); }); if(v==="pv") renderPreview(); }
+var tT; function toast(m){ var t=$("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tT); tT=setTimeout(function(){t.classList.remove("show");},2400); }
+function ask(title,body,yes){ var d=$("dlg"); if(!d.showModal){ if(confirm(body)) yes(); return; }
+  $("dlgT").textContent=title; $("dlgB").textContent=body; d.showModal();
+  $("dlgYes").onclick=function(){ d.close(); yes(); }; $("dlgNo").onclick=function(){ d.close(); }; }
+window.addEventListener("resize",function(){ scalePreview(); });
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ scalePreview(); checkAllOverflow(); renderNav(); });
+
+load(); renderNav(); renderForm(); renderPreview(); checkAllOverflow(); renderNav();
+})();
+</script>
+</body>
+</html>
